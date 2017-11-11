@@ -1,0 +1,98 @@
+
+##### "lib up dev" printout ###
+
+(default function)
+------------------
+url:      https://nrakoski3.lib.id/twilio-call@dev/
+code:     lib.nrakoski3.twilio-call['@dev']()
+shell:    lib nrakoski3.twilio-call[@dev]
+context:  (enabled)
+bg:       info
+
+  Begins a conversation with a specified telephone number
+  @param {string} tel The telephone number to initiate messaging with
+  @returns {object}
+
+messaging
+---------
+url:      https://nrakoski3.lib.id/twilio-call@dev/messaging/
+code:     lib.nrakoski3.twilio-call['@dev'].messaging()
+shell:    lib nrakoski3.twilio-call[@dev].messaging
+context:  (enabled)
+bg:       info
+
+  Main messaging (SMS/MMS) handler. Upon receiving a message, first check to see if there's media (MMS), if so, invoke __notfound__ handler with a media object, otherwise, check to see if message corresponds to a handler (more, whoami), invoke that if possible, or invoke __notfound__ with raw contents of message body.
+  @param {string} Body The message contents
+  @param {string} From The inbound number
+  @param {string} FromZip The zip associated with inbound number
+  @param {string} FromCity The city associated with inbound number
+  @param {string} FromState The state associated with inbound number
+  @param {string} FromCountry The country associated with inbound number
+  @param {string} To The outbound number, i.e. your Twilio Number
+  @param {string} ToZip The zip associated with outbound number
+  @param {string} ToCity The city associated with outbound number
+  @param {string} ToState The state associated with outbound number
+  @param {string} ToCountry The country associated with outbound number
+  @param {string} AccountSid The Twilio Account SID - sent from Twilio, used to verify webhook authenticity
+  @returns {object}
+
+messaging:notfound
+------------------
+url:      https://nrakoski3.lib.id/twilio-call@dev/messaging:notfound/
+code:     lib.nrakoski3.twilio-call['@dev'].messaging:notfound()
+shell:    lib nrakoski3.twilio-call[@dev].messaging:notfound
+context:  (disabled)
+bg:       info
+
+  Not found handler - handles all SMS / MMS that don't match a command (i.e. "more" = functions/messaging/more.js)
+  @param {string} tel The incoming telephone number
+  @param {string} body The (text) body of the message
+  @param {buffer} media The media content of the message, if any
+  @param {object} from Information about the incoming message: number, zip, city, state, country
+  @param {object} to Information about the receiver (your Twilio number): number, zip, city, state, country
+  @returns {string}
+
+messaging.more
+--------------
+url:      https://nrakoski3.lib.id/twilio-call@dev/messaging/more/
+code:     lib.nrakoski3.twilio-call['@dev'].messaging.more()
+shell:    lib nrakoski3.twilio-call[@dev].messaging.more
+context:  (disabled)
+bg:       info
+
+  MORE handler, responds if user texts "more" (or any uppercase variation like "MORE")
+  @param {string} tel The incoming telephone number
+  @param {string} body The (text) body of the message
+  @param {object} from Information about the incoming message: number, zip, city, state, country
+  @param {object} to Information about the receiver (your Twilio number): number, zip, city, state, country
+  @returns {string}
+
+messaging.whoami
+----------------
+url:      https://nrakoski3.lib.id/twilio-call@dev/messaging/whoami/
+code:     lib.nrakoski3.twilio-call['@dev'].messaging.whoami()
+shell:    lib nrakoski3.twilio-call[@dev].messaging.whoami
+context:  (disabled)
+bg:       info
+
+  WHOAMI handler, responds if user texts "whoami" (or any uppercase variation like "WHOAMI")
+  @param {string} tel The incoming telephone number
+  @param {string} body The (text) body of the message
+  @param {object} from Information about the incoming message: number, zip, city, state, country
+  @param {object} to Information about the receiver (your Twilio number): number, zip, city, state, country
+  @returns {string}
+
+voice
+-----
+url:      https://nrakoski3.lib.id/twilio-call@dev/voice/
+code:     lib.nrakoski3.twilio-call['@dev'].voice()
+shell:    lib nrakoski3.twilio-call[@dev].voice
+context:  (enabled)
+bg:       info
+
+  Main voice handler. Upon receiving a call, outputs a TwiML response to handle call routing.
+  Default is to forward the call to a number of your choosing, to be used for call forwarding from a help line, for example.
+  See https://www.twilio.com/docs/api/twiml/dial for more information.
+  @param {string} From The number that's calling (inbound)
+  @param {string} AccountSid The Twilio Account SID - sent from Twilio, used to verify webhook authenticity
+  @returns {buffer} XML (TwiML) information
