@@ -40,7 +40,25 @@ def auto_call():
     # no free APIs that send medical info to Emergency Services, however they all return JSON
     # Use Mongoose, JSON -> DB -> JSON
 
-    # Get information
+    # Get information as JSON - Python NamedTuple -> String
+
+    # Feed into IBM Watson
+    import json
+    from watson_developer_cloud import DialogV1 as Dialog
+
+    dialog = Dialog(username='YOUR_USERNAME', password='YOUR_PASSWORD')
+    dialog_id = 'YOUR_DIALOGID'
+    conversation = dialog.conversation(dialog_id)
+    client_id = conversation['client_id']
+    print dialog.update_profile(dialog_id=dialog_id, client_id=client_id,
+                                name_values={"name_values": [{"name": "Product_Name", "value": "Sunglasses"}]})
+    print dialog.update_profile(dialog_id=dialog_id, client_id=client_id,
+                                name_values=[{"name": "Product_Name", "value": "Sunglasses"}])
+
+
+    # Operator Interface with Twilio
+
+
 
 
 
